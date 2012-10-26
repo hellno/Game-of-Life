@@ -1,7 +1,5 @@
 my first perl script. Written in eight hours on a rainy friday.
 
-![alt text](http://github.com/hellno/Game-of-Life/blob/master/gameOfLife.png "amazing screenshot")
-
 Usage
 =====
 
