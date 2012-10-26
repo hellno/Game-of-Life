@@ -9,6 +9,7 @@ $clear_string = $terminal->Tputs('cl');
 $seedValue=0;
 
 sub printArray{
+	#output
 	my $bound = int($_[0]);
 	print "  ";
 	for($upperLine=0;$upperLine<$bound;$upperLine++){
@@ -36,6 +37,7 @@ sub printArray{
 }
 
 sub initArray{
+	#create playground
 
 	$bound = $_[0];
 	my $seedValue = int($_[1]);
@@ -62,6 +64,7 @@ sub initArray{
 }
 
 sub checkForLife{
+	#count surrounding life
 	my $xCoord=$_[0];
 	my $yCoord=$_[1];
 
@@ -91,6 +94,7 @@ sub checkForLife{
 	}
 
 	#print "Check for life at ",$xCoord,"|",$yCoord,"\n";
+	
 	if($leftOK){
 		#left side
 		if($lifearray[$xCoord-1][$yCoord]>0){
@@ -207,9 +211,10 @@ sub debugLifearray{
 }
 
 sub main{
-	#print $clear_string;
-
+	print $clear_string;
 	$overallLifeCount=0;
+
+	#user input
 	print "edge length: ";
 	$bound = <STDIN>;
 	print "iterations [in thousands]: ";
@@ -219,6 +224,7 @@ sub main{
 	print "display [Hz]";
 	$hz = <STDIN>;
 
+	#getting rid of linebreaks
 	$bound =~ s/\R//g;
 	$iterations =~ s/\R//g;
 	$seedValue =~ s/\R//g;
@@ -226,14 +232,21 @@ sub main{
 
 
 	$iterations = 1000 * $iterations;
+	
+	#no division by 0, mister!
 	if($hz!=0){
 		$hz = 1/$hz;
 	} else{
 		$hz = 1/5;
 	}
+	#chage bound limit for badass screens and computers
+	if($bound>100){
+		$bound=100;
+	}
 	$maxLiveCount = $bound*$bound;
 	$boundRoot = $bound/$bound;
 	@liveCountHistory = (0,0,1);
+
 
 	initArray($bound, $seedValue);
 	printArray($bound);
@@ -248,6 +261,7 @@ sub main{
 		#debugLifearray();
 		#$dummyCheck=<STDIN>;
 		
+		#end conditions: death or stuck for three generations
 		if($overallLifeCount<1 || $overallLifeCount==$maxLiveCount){
 			print "death in the ",$itCount,". generation\n";
 			$itCount=$iterations;
